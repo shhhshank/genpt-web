@@ -9,6 +9,11 @@ export type Payload = {
 }
 
 export const generatePPT = async (payload: Payload): Promise<string> => {
-  const response = await AxiosInstance.post('/generate', payload);
-  return response.data.url; // Assuming the response contains a success message
+  const response = await AxiosInstance.post('/generate', payload, {
+    responseType: 'blob'  // Set response type to blob
+  });
+  
+  // Create a blob URL from the response data
+  const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
+  return URL.createObjectURL(blob);
 };

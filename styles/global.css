@@ -1,0 +1,40 @@
+.service-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.service-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background: transparent;
+    color: #3498db;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+.option-item textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.action-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.btn.secondary {
+    background: #95a5a6;
+    margin-left: 1rem;
+} 

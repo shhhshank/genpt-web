@@ -4,13 +4,16 @@ type OptionProps = {
     active: boolean,
     setError: (error: string) => void,
     setStep: (step: number) => void,
-    setOption:(option:OptionItem) => void
+    setOption:(option:OptionItem) => void,
+    canHaveImage:boolean
 }
 
 export type OptionItem = {
     slideCount:number,
     pointCount:number,
-    contentSize:string
+    contentSize:string,
+    hasImage:boolean,
+    imageProvider:string
 }
 
 const CONTENT_CATEGORIES = [
@@ -20,11 +23,18 @@ const CONTENT_CATEGORIES = [
     "Extensive"
 ]
 
-const Option = ({ active, setError, setStep, setOption }: OptionProps) => {
+const IMAGE_PROVIDERS = [
+    "AI",
+    "Google",
+    "Stock"
+]
+
+const Option = ({ active, setError, setStep, setOption, canHaveImage }: OptionProps) => {
 
     const [slideCount, setSlideCount] = useState<string>("3")
     const [pointCount, setPointCount] = useState<string>("5")
     const [contentSize, setContentSize] = useState<string>("Moderate")
+    const [imageProvider, setImageProvider] = useState<string>("AI")
 
 
     const onFinish = () => {
@@ -47,7 +57,9 @@ const Option = ({ active, setError, setStep, setOption }: OptionProps) => {
         setOption({
             slideCount:Number(slideCount),
             pointCount:Number(pointCount),
-            contentSize
+            contentSize,
+            hasImage:canHaveImage,
+            imageProvider
         })
 
         setStep(4)
@@ -77,6 +89,12 @@ const Option = ({ active, setError, setStep, setOption }: OptionProps) => {
         setContentSize(event.target.value)
     }       
 
+
+
+    const onImageProviderChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setImageProvider(event.target.value)
+    }
+
     return (
         <div className={`content-section ${active ? 'active' : ''}`} id="step3">
             <h2>Presentation Options</h2>
@@ -93,13 +111,25 @@ const Option = ({ active, setError, setStep, setOption }: OptionProps) => {
                     <label>Content Size</label>
                     <select value={contentSize} onChange={onContentSizeChange}>
                         {CONTENT_CATEGORIES.map((item:string) => (
-                            <option value={item} selected={item === contentSize}>{item}</option>
+                            <option key={item} value={item}>{item}</option>
                         ))}
                     </select>
                 </div>
+                {canHaveImage && (
+                <div className="option-item">
+                    <label>Image Provider</label>
+                    <select value={imageProvider} onChange={onImageProviderChange}>
+                        {IMAGE_PROVIDERS.map((item:string) => (
+                            <option key={item} value={item}>{item}</option>
+                        ))}
+                        </select>
+                    </div>
+                )}
             </div>
-            <button className="btn-secondary" style={{marginRight:'10px'}} onClick={() => setStep(2)}>Back</button>
-            <button className="btn" onClick={onFinish}>Finish</button>
+            <div>
+                <button className="btn-secondary" style={{marginRight:'10px'}} onClick={() => setStep(2)}>Back</button>
+                <button className="btn" onClick={onFinish}>Finish</button>
+            </div>
         </div>
     )
 }

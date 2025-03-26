@@ -8,9 +8,10 @@ type TemplateProps = {
     setStep: (step: number) => void,
     setShowLoader: (visible: boolean) => void;
     setTemplateId: (id: string) => void;
+    setCanHaveImage: (can_have_image: boolean) => void;
 }
 
-const Template = ({ active, setError, setStep, setShowLoader, setTemplateId }: TemplateProps) => {
+const Template = ({ active, setError, setStep, setShowLoader, setTemplateId, setCanHaveImage }: TemplateProps) => {
 
     const [template, setTemplate] = useState<string>()
     const [file, setFile] = useState<File | null>(null);
@@ -33,8 +34,9 @@ const Template = ({ active, setError, setStep, setShowLoader, setTemplateId }: T
         }
     }, [active])
 
-    const onTemplateSelected = (id:string) => {
+    const onTemplateSelected = (id:string, canHaveImage:boolean) => {
         setTemplate(id)
+        setCanHaveImage(canHaveImage)
     }
 
     const onContinue = async () => {
@@ -83,8 +85,8 @@ const Template = ({ active, setError, setStep, setShowLoader, setTemplateId }: T
             <h2>Choose a Template</h2>
             <div className="template-grid">
                 {templateList.filter((item:TemplateTypes.Template) => item.thumbnail != null).map((item: TemplateTypes.Template) => (
-                    <div onClick={onTemplateSelected.bind(this, item.id)} className={"template-card " + (template == item.id ? "selected" : "")}>
-                        <img src={"http://127.0.0.1:8080/uploads/" + item.thumbnail} alt="Modern Template" className="template-img" />
+                    <div onClick={onTemplateSelected.bind(this, item.id, item.has_image)} className={"template-card " + (template == item.id ? "selected" : "")}>
+                        <img src={`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/uploads/${item.thumbnail}`} alt="Modern Template" className="template-img" />
                     </div>
                 ))}
             </div>
