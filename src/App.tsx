@@ -58,11 +58,11 @@ function App() {
             <button className="btn">Try It Out</button>
           </div>
 
-          <div className="mode-card" onClick={() => setMode('minutes')}>
+          {/* <div className="mode-card" onClick={() => setMode('minutes')}>
             <h2>Generate Minutes</h2>
             <p>Create meeting minutes from your presentations automatically</p>
             <button className="btn">Generate Minutes</button>
-          </div>
+          </div> */}
 
         </div>
 
